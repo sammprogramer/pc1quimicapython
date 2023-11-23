@@ -1,0 +1,127 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/sammprogramer/pc1quimicapython/blob/main/electrolisis%20trabajo\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "-sLbPeA2fIKf",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "b66e4091-1cec-4464-ab72-f18fbf1f25f6"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Electrólisis exitosa. Se ha producido H2 y O2.\n",
+            "Cantidad de H2 producido: 2\n",
+            "Cantidad de O2 producido: 1\n",
+            "Cantidad de agua restante: 100\n"
+          ]
+        }
+      ],
+      "source": [
+        "class Electrolisis:\n",
+        "    def __init__(self, agua):\n",
+        "        self.agua = agua\n",
+        "        self.hidrogeno = 0\n",
+        "        self.oxigeno = 0\n",
+        "\n",
+        "    def realizar_electrolisis(self):\n",
+        "        # Suponemos que se necesita una cierta cantidad de energía para la electrólisis\n",
+        "        energia_necesaria = 100\n",
+        "\n",
+        "        if self.agua.cantidad >= energia_necesaria:\n",
+        "            # Se produce hidrógeno y oxígeno en la proporción 2:1\n",
+        "            self.hidrogeno = 2\n",
+        "            self.oxigeno = 1\n",
+        "\n",
+        "            # Descontamos la energía utilizada\n",
+        "            self.agua.cantidad -= energia_necesaria\n",
+        "            print(\"Electrólisis exitosa. Se ha producido H2 y O2.\")\n",
+        "        else:\n",
+        "            print(\"No hay suficiente energía para realizar la electrólisis.\")\n",
+        "\n",
+        "class Sustancia:\n",
+        "    def __init__(self, nombre, cantidad):\n",
+        "        self.nombre = nombre\n",
+        "        self.cantidad = cantidad\n",
+        "\n",
+        "# Creamos una instancia de agua\n",
+        "agua = Sustancia(\"H2O\", 200)  # Suponemos que tenemos 200 unidades de agua\n",
+        "\n",
+        "# Creamos una instancia de electrólisis y la ejecutamos\n",
+        "electrolisis = Electrolisis(agua)\n",
+        "electrolisis.realizar_electrolisis()\n",
+        "\n",
+        "# Imprimimos los resultados\n",
+        "print(\"Cantidad de H2 producido:\", electrolisis.hidrogeno)\n",
+        "print(\"Cantidad de O2 producido:\", electrolisis.oxigeno)\n",
+        "print(\"Cantidad de agua restante:\", agua.cantidad)\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "from sklearn.ensemble import RandomForestClassifier\n",
+        "from sklearn.metrics import accuracy_score\n",
+        "\n",
+        "# Loading the data (assuming it's in a CSV file with columns: ['chemical', 'species'])\n",
+        "data = pd.read_csv('your_data.csv')\n",
+        "\n",
+        "# Defining the features (X) and the target variable (y)\n",
+        "X = data[['chemical']]\n",
+        "y = data['species']\n",
+        "\n",
+        "# Splitting the data into a training set and a test set\n",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+        "\n",
+        "# Creating a Random Forest Classifier\n",
+        "rfc = RandomForestClassifier(n_estimators=100, random_state=42)\n",
+        "\n",
+        "# Training the model\n",
+        "rfc.fit(X_train, y_train)\n",
+        "\n",
+        "# Making predictions\n",
+        "y_pred = rfc.predict(X_test)\n",
+        "\n",
+        "# Checking the accuracy of the model\n",
+        "print('Accuracy:', accuracy_score(y_test, y_pred))"
+      ],
+      "metadata": {
+        "id": "puct69LZf_ra"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
